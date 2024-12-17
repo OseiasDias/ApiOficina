@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\EquipeSuporteController;
+use App\Http\Controllers\ProdutoController;
 
 
 /*
@@ -36,3 +37,14 @@ Route::post('fornecedores', [FornecedorController::class, 'store']); // Criar um
 Route::put('fornecedores/{id}', [FornecedorController::class, 'update']); // Atualizar fornecedor
 Route::delete('fornecedores/{id}', [FornecedorController::class, 'destroy']); // Deletar fornecedor
 
+//Routas Para Produtos
+
+
+
+
+// Rotas para Produtos
+Route::get('produtos', [ProdutoController::class, 'index']); // Listar todos os produtos
+Route::get('produtos/{id}', [ProdutoController::class, 'show']); // Mostrar um produto específico
+Route::post('produtos', [ProdutoController::class, 'store']); // Criar um novo produto
+Route::put('produtos/{id}', [ProdutoController::class, 'update']); // Atualizar um produto existente
+Route::delete('produtos/{id}', [ProdutoController::class, 'destroy']); // Deletar um produto
