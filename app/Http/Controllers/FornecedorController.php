@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Models\Fornecedor;
@@ -37,7 +38,7 @@ class FornecedorController extends Controller
             'email' => 'required|email|unique:fornecedores,email',
             'celular' => 'required|string|max:16|unique:fornecedores,celular',
             'telefoneFixo' => 'nullable|string|max:16',
-            'imagem' => 'nullable|image',
+            'imagem' => 'nullable|string', // Aceita uma string representando o caminho da imagem
             'genero' => 'required|in:Masculino,Feminino',
             'pais' => 'required|string',
             'estado' => 'required|string',
@@ -51,13 +52,6 @@ class FornecedorController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        // Manipulação do arquivo de imagem, se existir
-        if ($request->hasFile('imagem')) {
-            $imagePath = $request->file('imagem')->store('images', 'public');
-        } else {
-            $imagePath = null;
-        }
-
         // Criptografando a senha
         $senhaCriptografada = Hash::make($request->senha);
 
@@ -69,7 +63,7 @@ class FornecedorController extends Controller
             'email' => $request->email,
             'celular' => $request->celular,
             'telefoneFixo' => $request->telefoneFixo,
-            'imagem' => $imagePath,
+            'imagem' => $request->imagem, // Agora aceita uma string para o caminho da imagem
             'genero' => $request->genero,
             'pais' => $request->pais,
             'estado' => $request->estado,
@@ -93,31 +87,24 @@ class FornecedorController extends Controller
 
         // Validação
         $validator = Validator::make($request->all(), [
-            'primeiroNome' => 'required|string|max:50',
-            'ultimoNome' => 'required|string|max:50',
-            'nomeEmpresa' => 'required|string|max:100',
-            'email' => 'required|email|unique:fornecedores,email,' . $id,
-            'celular' => 'required|string|max:16|unique:fornecedores,celular,' . $id,
+            'primeiroNome' => 'nullable|string|max:50',
+            'ultimoNome' => 'nullable|string|max:50',
+            'nomeEmpresa' => 'nullable|string|max:100',
+            'email' => 'nullable|email|unique:fornecedores,email,' . $id,
+            'celular' => 'nullable|string|max:16|unique:fornecedores,celular,' . $id,
             'telefoneFixo' => 'nullable|string|max:16',
-            'imagem' => 'nullable|image',
-            'genero' => 'required|in:Masculino,Feminino',
-            'pais' => 'required|string',
-            'estado' => 'required|string',
-            'municipio' => 'required|string',
-            'endereco' => 'required|string',
+            'imagem' => 'nullable|string', // Aceita uma string para o caminho da imagem
+            'genero' => 'nullable|in:Masculino,Feminino',
+            'pais' => 'nullable|string',
+            'estado' => 'nullable|string',
+            'municipio' => 'nullable|string',
+            'endereco' => 'nullable|string',
             'notas' => 'nullable|string',
-            'senha' => 'nullable|string|min:8', // Senha é opcional no update, mas se fornecida, precisa ser criptografada
+            'senha' => 'nullable|string|min:8', // Senha é opcional no update
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
-        }
-
-        // Manipulação do arquivo de imagem, se existir
-        if ($request->hasFile('imagem')) {
-            $imagePath = $request->file('imagem')->store('images', 'public');
-        } else {
-            $imagePath = $fornecedor->imagem; // Mantém a imagem anterior, caso não haja nova
         }
 
         // Se a senha foi fornecida, criptografa
@@ -127,22 +114,25 @@ class FornecedorController extends Controller
             $senhaCriptografada = $fornecedor->senha; // Mantém a senha anterior
         }
 
-        // Atualizando o fornecedor
+        // Manipulação da imagem, se enviada
+        $imagePath = $request->imagem ? $request->imagem : $fornecedor->imagem; // Mantém a imagem anterior, se não enviada
+
+        // Atualizando o fornecedor com os dados fornecidos
         $fornecedor->update([
-            'primeiroNome' => $request->primeiroNome,
-            'ultimoNome' => $request->ultimoNome,
-            'nomeEmpresa' => $request->nomeEmpresa,
-            'email' => $request->email,
-            'celular' => $request->celular,
-            'telefoneFixo' => $request->telefoneFixo,
-            'imagem' => $imagePath,
-            'genero' => $request->genero,
-            'pais' => $request->pais,
-            'estado' => $request->estado,
-            'municipio' => $request->municipio,
-            'endereco' => $request->endereco,
-            'notas' => $request->notas,
-            'senha' => $senhaCriptografada, // Atualiza com a senha criptografada, se fornecida
+            'primeiroNome' => $request->primeiroNome ?? $fornecedor->primeiroNome,
+            'ultimoNome' => $request->ultimoNome ?? $fornecedor->ultimoNome,
+            'nomeEmpresa' => $request->nomeEmpresa ?? $fornecedor->nomeEmpresa,
+            'email' => $request->email ?? $fornecedor->email,
+            'celular' => $request->celular ?? $fornecedor->celular,
+            'telefoneFixo' => $request->telefoneFixo ?? $fornecedor->telefoneFixo,
+            'imagem' => $imagePath, // Atualiza com a imagem fornecida ou mantém a anterior
+            'genero' => $request->genero ?? $fornecedor->genero,
+            'pais' => $request->pais ?? $fornecedor->pais,
+            'estado' => $request->estado ?? $fornecedor->estado,
+            'municipio' => $request->municipio ?? $fornecedor->municipio,
+            'endereco' => $request->endereco ?? $fornecedor->endereco,
+            'notas' => $request->notas ?? $fornecedor->notas,
+            'senha' => $senhaCriptografada, // Atualiza com a nova senha, se fornecida
         ]);
 
         return response()->json($fornecedor);
