@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateComprasTable extends Migration
 {
     public function up()
-    {
+{
+    if (!Schema::hasTable('compras')) {
         Schema::create('compras', function (Blueprint $table) {
             $table->id(); // Chave primária auto incrementada
             $table->string('numeroCompra'); // Número da compra
@@ -22,6 +23,8 @@ class CreateComprasTable extends Migration
             $table->timestamps(); // Created_at e Updated_at
         });
     }
+}
+
 
     public function down()
     {

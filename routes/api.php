@@ -6,6 +6,7 @@ use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\EquipeSuporteController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\ClienteController;
 
 
 /*
@@ -60,3 +61,16 @@ Route::get('compras/{id}', [CompraController::class, 'show']); // Mostrar uma co
 Route::post('compras', [CompraController::class, 'store']); // Criar uma nova compra
 Route::put('compras/{id}', [CompraController::class, 'update']); // Atualizar uma compra
 Route::delete('compras/{id}', [CompraController::class, 'destroy']); // Deletar uma compra
+
+
+//ROutes do Clientes
+
+
+
+
+Route::get('clientes/', [ClienteController::class, 'index']);  // Listar todos os clientes
+Route::get('clientes/{id}', [ClienteController::class, 'show']); // Mostrar um cliente específico
+Route::post('clientes', [ClienteController::class, 'store']); // Criar novo cliente
+Route::put('clientes/{id}', [ClienteController::class, 'update']); // Atualizar cliente
+Route::delete('clientes/{id}', [ClienteController::class, 'destroy']); // Deletar cliente
+
