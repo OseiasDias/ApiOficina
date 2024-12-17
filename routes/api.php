@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\EquipeSuporteController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\CompraController;
 
 
 /*
@@ -48,3 +49,14 @@ Route::get('produtos/{id}', [ProdutoController::class, 'show']); // Mostrar um p
 Route::post('produtos', [ProdutoController::class, 'store']); // Criar um novo produto
 Route::put('produtos/{id}', [ProdutoController::class, 'update']); // Atualizar um produto existente
 Route::delete('produtos/{id}', [ProdutoController::class, 'destroy']); // Deletar um produto
+
+
+// Routes Compra
+
+
+
+Route::get('compras', [CompraController::class, 'index']); // Listar todas as compras
+Route::get('compras/{id}', [CompraController::class, 'show']); // Mostrar uma compra específica
+Route::post('compras', [CompraController::class, 'store']); // Criar uma nova compra
+Route::put('compras/{id}', [CompraController::class, 'update']); // Atualizar uma compra
+Route::delete('compras/{id}', [CompraController::class, 'destroy']); // Deletar uma compra
