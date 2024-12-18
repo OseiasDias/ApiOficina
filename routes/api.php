@@ -9,6 +9,9 @@ use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\VeiculoController;
+use App\Http\Controllers\OrdemServicoController;
+
+
 
 
 
@@ -91,6 +94,8 @@ Route::put('/funcionarios/{id}', [FuncionarioController::class, 'update']);
 Route::delete('/funcionarios/{id}', [FuncionarioController::class, 'destroy']);
 
 
+//Routes para Veiculos
+
 //Routes do Veiculos
 
 
@@ -101,4 +106,19 @@ Route::get('veiculos/{id}', [VeiculoController::class, 'show']);       // Exibir
 Route::put('veiculos/{id}', [VeiculoController::class, 'update']);     // Atualizar um veículo
 Route::delete('veiculos/{id}', [VeiculoController::class, 'destroy']); // Excluir um veículo
 
+
+
+// Obter todas as ordens de serviço
+Route::get('/ordens-servico', [OrdemServicoController::class, 'index']);
+// Obter uma ordem de serviço específica
+Route::get('ordens-servico/{id}', [OrdemServicoController::class, 'show']);
+
+// Criar uma nova ordem de serviço
+Route::post('ordens-servico/', [OrdemServicoController::class, 'store']);
+
+// Atualizar uma ordem de serviço
+Route::put('ordens-servico/{id}', [OrdemServicoController::class, 'update']);
+
+// Deletar uma ordem de serviço
+Route::delete('ordens-servico/{id}', [OrdemServicoController::class, 'destroy']);
 
