@@ -7,6 +7,8 @@ use App\Http\Controllers\EquipeSuporteController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\FuncionarioController;
+
 
 
 /*
@@ -74,3 +76,14 @@ Route::post('clientes', [ClienteController::class, 'store']); // Criar novo clie
 Route::put('clientes/{id}', [ClienteController::class, 'update']); // Atualizar cliente
 Route::delete('clientes/{id}', [ClienteController::class, 'destroy']); // Deletar cliente
 
+//Routes do funcionarios
+
+
+// routes/api.php
+
+
+Route::get('/funcionarios', [FuncionarioController::class, 'index']);
+Route::get('/funcionarios/{id}', [FuncionarioController::class, 'show']);
+Route::post('/funcionarios', [FuncionarioController::class, 'store']);
+Route::put('/funcionarios/{id}', [FuncionarioController::class, 'update']);
+Route::delete('/funcionarios/{id}', [FuncionarioController::class, 'destroy']);
