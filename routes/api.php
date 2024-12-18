@@ -8,6 +8,8 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FuncionarioController;
+use App\Http\Controllers\VeiculoController;
+
 
 
 
@@ -87,3 +89,16 @@ Route::get('/funcionarios/{id}', [FuncionarioController::class, 'show']);
 Route::post('/funcionarios', [FuncionarioController::class, 'store']);
 Route::put('/funcionarios/{id}', [FuncionarioController::class, 'update']);
 Route::delete('/funcionarios/{id}', [FuncionarioController::class, 'destroy']);
+
+
+//Routes do Veiculos
+
+
+
+Route::get('/veiculos', [VeiculoController::class, 'index']);         // Listar todos os veículos
+Route::post('/veiculos', [VeiculoController::class, 'store']);        // Criar um novo veículo
+Route::get('veiculos/{id}', [VeiculoController::class, 'show']);       // Exibir um veículo específico
+Route::put('veiculos/{id}', [VeiculoController::class, 'update']);     // Atualizar um veículo
+Route::delete('veiculos/{id}', [VeiculoController::class, 'destroy']); // Excluir um veículo
+
+
